@@ -9,7 +9,7 @@ ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n';
 
-LOAD DATA LOCAL INPATH '/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/hive/Case Study/bankmarketing.txt' OVERWRITE INTO TABLE bankingT;
+LOAD DATA LOCAL INPATH '/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/hive/Case Study/bankmarketing.txt' OVERWRITE INTO TABLE banking;
 
 
 # Creating a table using Partitions with y as partition Key.
@@ -52,7 +52,7 @@ select max(age) as `Maximum Age target`, min(age) as `Minimum Age target`, avg(a
 
 5)
 
-
+select avg(balance) as avg_balance, percentile_approx(balance,0.5) as median_balance from banking;
 
 6) 
 
