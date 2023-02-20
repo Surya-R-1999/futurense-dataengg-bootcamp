@@ -1,0 +1,39 @@
+Q) difference between embedded hive server and external hive server?
+
+The difference between an embedded Hive server and an external Hive server lies in where the Hive server runs and how it is deployed.
+
+An embedded Hive server is a Hive server that is deployed within an application. In this deployment mode, the Hive server runs in the same process as the application, and it typically shares the same resources as the application. Embedded Hive servers are used when an application needs to provide SQL-like query capabilities without requiring a separate server or cluster.
+
+An external Hive server, on the other hand, is a standalone server that runs outside of an application. This server is typically deployed on a dedicated machine or cluster and is accessible over the network. External Hive servers are used when multiple applications or users need to access Hive functionality, or when the scale of data processing requires a dedicated server or cluster.
+
+Overall, the choice between an embedded and external Hive server depends on the requirements of the application and the scale of the data processing. Embedded Hive servers are simpler to deploy and manage, but they may not be suitable for larger-scale data processing or multi-user scenarios. External Hive servers are more complex to deploy and manage, but they offer greater scalability and better performance in large-scale data processing scenarios.
+
+Q) serde in hive
+
+In Apache Hive, SerDe (short for Serializer/Deserializer) is a library used for reading and writing data in various formats such as CSV, JSON, Avro, ORC, Parquet, and others.
+
+When data is stored in Hive tables, it is serialized into a specific format for efficient storage and query processing. When data is read from or written to Hive tables, the SerDe library is used to convert the data between its serialized format and a Java object representation.
+
+SerDe is used in Hive to map the columns in a table to the fields in the data format. It understands the structure of the data format and how it maps to the schema of the table in Hive. Each data format typically has its own corresponding SerDe implementation that knows how to read and write data in that format.
+
+Hive provides a number of built-in SerDes for common data formats, but it is also possible to write custom SerDes for other data formats. Writing a custom SerDe involves implementing the SerDe interface and specifying the mapping between the data format and the table schema.
+
+Overall, SerDe plays a critical role in allowing Hive to work with a wide range of data formats and enabling efficient data processing in Hive tables.
+
+Q) types of serde
+
+In Apache Hive, there are several types of SerDe (Serializer/Deserializer) that are used to serialize and deserialize data between Hive tables and their underlying storage formats. Some of the most common SerDe types in Hive are:
+
+LazySimpleSerDe: This is the default SerDe in Hive and is used for handling text files. It is a simple and efficient SerDe that supports delimiter-separated values and does not require a schema definition.
+
+AvroSerDe: This SerDe is used for handling data stored in Avro format. It supports both binary and JSON-encoded data and can handle complex data types such as arrays and maps.
+
+OrcSerDe: This SerDe is used for handling data stored in ORC (Optimized Row Columnar) format. It provides efficient compression and serialization capabilities, and supports complex data types such as structs, arrays, and maps.
+
+ParquetSerDe: This SerDe is used for handling data stored in Parquet format. It provides efficient compression and serialization capabilities, and supports complex data types such as structs, arrays, and maps.
+
+JSONSerDe: This SerDe is used for handling data stored in JSON format. It supports both simple and complex data types, and can handle nested JSON structures.
+
+ColumnarSerDe: This SerDe is used for handling data stored in columnar format. It provides efficient compression and serialization capabilities, and supports complex data types such as structs, arrays, and maps.
+
+In addition to these built-in SerDes, Hive also allows users to write their own custom SerDes to support other data formats or serialization schemes. Writing a custom SerDe involves implementing the SerDe interface and specifying the mapping between the data format and the table schema.
