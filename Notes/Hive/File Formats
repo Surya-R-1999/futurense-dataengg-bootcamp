@@ -1,0 +1,30 @@
+Hive File Formats:
+------------------
+
+Exporting The files:
+--------------------
+
+(Hive Client) Beeline:
+----------------------
+
+ INSERT OVERWRITE DIRECTORY '/user/training/export/sequence' row format delimited fields terminated by ',' STORED AS sequencefile SELECT * FROM employee_json;
+ 
+ INSERT OVERWRITE DIRECTORY '/user/training/export/avro' row format delimited fields terminated by ',' STORED AS avro SELECT * FROM employee_json;
+  
+ INSERT OVERWRITE DIRECTORY '/user/training/export/orc' row format delimited fields terminated by ',' STORED AS orc SELECT * FROM employee_json; 
+ 
+ INSERT OVERWRITE DIRECTORY '/user/training/export/parquet' row format delimited fields terminated by ',' STORED AS PARQUET SELECT * FROM employee_json;
+ 
+ Shell:
+ ------
+ 
+ hadoop fs -cat /user/training/export/parquet/000000_0
+  
+ hadoop fs -cat /user/training/export/orc/000000_0
+   
+ hadoop fs -cat /user/training/export/sequence/000000_0
+    
+ hadoop fs -cat /user/training/export/avro/000000_0
+ 
+ 
+ 
