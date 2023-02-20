@@ -37,3 +37,20 @@ JSONSerDe: This SerDe is used for handling data stored in JSON format. It suppor
 ColumnarSerDe: This SerDe is used for handling data stored in columnar format. It provides efficient compression and serialization capabilities, and supports complex data types such as structs, arrays, and maps.
 
 In addition to these built-in SerDes, Hive also allows users to write their own custom SerDes to support other data formats or serialization schemes. Writing a custom SerDe involves implementing the SerDe interface and specifying the mapping between the data format and the table schema.
+
+
+Q) How does skewness vary based on mean and median?
+
+Skewness is a measure of the asymmetry of a probability distribution. A distribution is said to be skewed if it is not symmetric around its mean. The direction and degree of skewness can be affected by both the mean and the median of the distribution.
+
+If the mean and median of a distribution are equal, then the distribution is symmetric, and its skewness is zero. This is because the values to the left and right of the mean are balanced, and the distribution is evenly distributed.
+
+If the mean is greater than the median, the distribution is said to be positively skewed, and its skewness is positive. This is because the values to the right of the mean are larger and more spread out than the values to the left of the mean. In this case, the mean is greater than the median, and the tail of the distribution is longer on the right side.
+
+Conversely, if the median is greater than the mean, the distribution is said to be negatively skewed, and its skewness is negative. This is because the values to the left of the median are larger and more spread out than the values to the right of the median. In this case, the mean is less than the median, and the tail of the distribution is longer on the left side.
+
+Overall, the relationship between skewness, mean, and median can be summarized as follows:
+
+If the mean and median are equal, the distribution is symmetric and has zero skewness.
+If the mean is greater than the median, the distribution is positively skewed, and its skewness is positive.
+If the median is greater than the mean, the distribution is negatively skewed, and its skewness is negative.
