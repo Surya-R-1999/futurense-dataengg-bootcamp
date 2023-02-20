@@ -43,11 +43,14 @@ These are some of the commonly used file formats in Hive and their respective sy
 
 * The concept of sequence file is to put each small files to a larger single file. example 10000 100kb files is converted to single 1Gb file in HDFS with 8 blocks.
 
-SYNTAX:
--------
+SYNTAX FOR CREATION OF TABLE:
+-----------------------------
 
 create table emp_sequence stored as sequencefile as select * from employee;
 
+
+SYNTAX FOR INSERTION OF TABLE:
+-----------------------------
 
 Exporting The files:
 --------------------
