@@ -3,13 +3,13 @@
 # Creating a Managed Table.
 ---------------------------
 
-CREATE TABLE IF NOT EXISTS bankmarket_PART(age int,job String,marital String, education String,default String,balance int,housing String,loan String,contact String,day int,month String,duration int,campaign int,pdays int,previous int,poutcome String, y String)
+CREATE TABLE IF NOT EXISTS banking(age int,job String,marital String, education String,default String,balance int,housing String,loan String,contact String,day int,month String,duration int,campaign int,pdays int,previous int,poutcome String, y String)
 COMMENT 'bankmarket details'
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ';'
 LINES TERMINATED BY '\n';
 
-LOAD DATA LOCAL INPATH '/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/hive/Case Study/bankmarketing.txt' OVERWRITE INTO TABLE BANKMARKET_PART;
+LOAD DATA LOCAL INPATH '/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/hive/Case Study/bankmarketing.txt' OVERWRITE INTO TABLE bankingT;
 
 
 # Creating a table using Partitions with y as partition Key.
