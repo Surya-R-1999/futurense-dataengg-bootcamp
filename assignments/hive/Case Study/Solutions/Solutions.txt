@@ -56,14 +56,14 @@ select avg(balance) as avg_balance, percentile_approx(balance,0.5) as median_bal
 
 6) 
 
-select age, count(*) as `Number of subscribers` from bankmarket_part tablesample(bucket 1 out of 6) where y = "yes" group by age;
+select age, count(*) as `Number of subscribers` from bankmarket_part tablesample(bucket 1 out of 6) where y = "yes" group by age order by age;
 
 7)
 
-select marital, count(*) as `Number of subscribers` from bankmarket_part tablesample(bucket 1 out of 6) where y = "yes" group by marital;
+select marital, count(*) as `Number of subscribers` from bankmarket_part tablesample(bucket 1 out of 6) where y = "yes" group by marital order by 2;
 
 8)
 
-select age, count(*) as `Number of subscribers` from bankmarket_part tablesample(bucket 1 out of 6) where marital = "married" and y = "yes" group by age;
+select age, count(*) as `Number of subscribers` from bankmarket_part tablesample(bucket 1 out of 6) where marital = "married" and y = "yes" group by age order by age;
 
-select age, count(*) as `Number of subscribers` from bankmarket_part tablesample(bucket 1 out of 6) where marital = "divorced" and y = "yes" group by age;
+select age, count(*) as `Number of subscribers` from bankmarket_part tablesample(bucket 1 out of 6) where marital = "divorced" and y = "yes" group by age order by age;
