@@ -1,0 +1,69 @@
+1)
+
+# Creating a Managed Table.
+---------------------------
+
+CREATE TABLE IF NOT EXISTS bankmarket_PART(age int,job String,marital String, education String,default String,balance int,housing String,loan String,contact String,day int,month String,duration int,campaign int,pdays int,previous int,poutcome String, y String)
+COMMENT 'bankmarket details'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ';'
+LINES TERMINATED BY '\n';
+
+LOAD DATA LOCAL INPATH '/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/hive/Case Study/bankmarketing.txt' OVERWRITE INTO TABLE BANKMARKET_PART;
+
+
+# Creating a table using Partitions with y as partition Key.
+--------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS bankmarket_PART(age int,job String,marital String, education String,default String,balance int,housing String,loan String,contact String,day int,month String,duration int,campaign int,pdays int,previous int,poutcome String)
+COMMENT 'bankmarket_PART details'
+PARTITIONED BY (y String) CLUSTERED BY (age) INTO 6 BUCKETS
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ';'
+LINES TERMINATED BY '\n';
+
+LOAD DATA LOCAL INPATH '/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/hive/Case Study/bankmarketing.txt' OVERWRITE INTO TABLE BANKMARKET_PART;
+
+# Creating a table using Partitions with Marital as partition Key.
+--------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS bankmarket_PART_marital(age int,job String,education String,default String,balance int,housing String,loan String,contact String,day int,month String,duration int,campaign int,pdays int,previous int,poutcome String, y String)
+COMMENT 'bankmarket_PART_marital details'
+PARTITIONED BY (marital String) CLUSTERED BY (age) INTO 6 BUCKETS
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ';'
+LINES TERMINATED BY '\n';
+
+LOAD DATA LOCAL INPATH '/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/hive/Case Study/bankmarketing.txt' OVERWRITE INTO TABLE BANKMARKET_PART_marital;
+
+Queries:
+--------
+2)
+
+select sum(if(y = 'yes',1,0)) as `Number of Subscriptions`, count(*) as `Number of entries`, sum(if(y = 'yes',1,0)) / count(*) as `Success Rate` from banking;
+
+3)
+
+select count(*) - sum(if(y = 'yes',1,0)) as `Number of Unsubscriptions`, count(*) as `Number of entries`, 1 - (sum(if(y = 'yes',1,0)) / count(*)) as `Failure Rate` from banking;
+
+4)
+
+select max(age) as `Maximum Age target`, min(age) as `Minimum Age target`, avg(age) as `Average Age target` from banking;
+
+5)
+
+
+
+6) 
+
+select age, count(*) as `Number of subscribers` from bankmarket_part tablesample(bucket 1 out of 6) where y = "yes" group by age;
+
+7)
+
+select marital, count(*) as `Number of subscribers` from bankmarket_part tablesample(bucket 1 out of 6) where y = "yes" group by marital;
+
+8)
+
+select age, count(*) as `Number of subscribers` from bankmarket_part tablesample(bucket 1 out of 6) where marital = "married" and y = "yes" group by age;
+
+select age, count(*) as `Number of subscribers` from bankmarket_part tablesample(bucket 1 out of 6) where marital = "divorced" and y = "yes" group by age;
