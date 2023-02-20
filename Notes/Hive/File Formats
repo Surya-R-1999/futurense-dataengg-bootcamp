@@ -1,6 +1,49 @@
 Hive File Formats:
 ------------------
 
+Different Types of File Formats  in Hive and their Use Cases with syntax?
+Hive is a data warehousing tool built on top of Hadoop that provides a SQL-like interface to query and analyze data stored in Hadoop. Hive supports various file formats for data storage and retrieval, each with its own advantages and use cases. Here are some of the commonly used file formats in Hive along with their syntax and use cases:
+
+TextFile:
+Syntax: CREATE TABLE tablename (col1 datatype, col2 datatype, ...)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+Use Case: TextFile is a plain text file format with each record separated by a newline character and fields separated by a delimiter. It is a default file format in Hive and supports simple data structures. It is suitable for storing data that is not complex and doesn't require fast querying.
+
+ORC:
+Syntax: CREATE TABLE tablename (col1 datatype, col2 datatype, ...)
+STORED AS ORC;
+
+Use Case: ORC (Optimized Row Columnar) is a columnar file format that compresses data and provides better performance compared to TextFile format. It is suitable for storing large datasets with complex data structures and is optimized for efficient querying.
+
+Parquet:
+Syntax: CREATE TABLE tablename (col1 datatype, col2 datatype, ...)
+STORED AS PARQUET;
+
+Use Case: Parquet is also a columnar file format that is optimized for querying and processing large datasets. It provides better compression and performance compared to ORC format and supports complex data structures like nested data types.
+
+Avro:
+Syntax: CREATE TABLE tablename
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.avro.AvroSerDe'
+STORED AS INPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat';
+
+Use Case: Avro is a binary data serialization format that supports schema evolution and provides efficient encoding and decoding of data. It is suitable for storing data that is schema-heavy and requires frequent schema changes.
+
+SequenceFile:
+Syntax: CREATE TABLE tablename (col1 datatype, col2 datatype, ...)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
+STORED AS SEQUENCEFILE;
+
+Use Case: SequenceFile is a binary file format that stores data in a key-value pair format. It is suitable for storing large datasets and is optimized for data processing and map-reduce jobs.
+
+These are some of the commonly used file formats in Hive and their respective syntax and use cases. Choosing the right file format depends on the type of data being stored, its structure, and the performance requirements of the queries.
+
+
+
+
 Exporting The files:
 --------------------
 
