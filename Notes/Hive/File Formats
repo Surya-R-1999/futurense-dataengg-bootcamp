@@ -41,7 +41,9 @@ Use Case: SequenceFile is a binary file format that stores data in a key-value p
 
 These are some of the commonly used file formats in Hive and their respective syntax and use cases. Choosing the right file format depends on the type of data being stored, its structure, and the performance requirements of the queries.
 
+* The concept of sequence file is to put each small files to a larger single file. example 10000 100kb files is converted to single 1Gb file in HDFS with 8 blocks.
 
+* 
 
 
 Exporting The files:
