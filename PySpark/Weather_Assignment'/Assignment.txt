@@ -1,0 +1,24 @@
+# Weather Assignment
+
+- >>> rdd1 = sc.textFile("/mnt/c/Users/miles/Documents/futurense_hadoop-pyspark/labs/dataset/weather/weather_data.txt")
+- >>> rdd2 = rdd1.map(lambda x : x.split())
+- >>> rdd3 = rdd2.map(lambda x : [x[5],x[6]]);
+- >>> output = rdd3.collect()
+- >>> max_temp = []
+- >>> min_temp = []
+- >>> for i in range(len(output)):
+- ...     max_temp.append(float(output[i][0].strip()))
+- ...     min_temp.append(float(output[i][1].strip()))
+- ...
+- >>> max = 0
+- >>> for i in range(len(max_temp)):
+- ...     if max_temp[i] > max:
+- ...             max = max_temp[i]
+- ...
+- >>> min = max
+- >>> for i in range(len(min_temp)):
+- ...     if min_temp[i] < min:
+- ...             min = min_temp[i]
+- ...
+- >>> print(f'The maximum and minimum temperatures are : {max} and {min} ')
+- Output : The maximum and minimum temperatures are : 36.0 and -7.9

@@ -12,8 +12,24 @@ import pandas as pd
 
 df = pd.read_csv("movies.csv")
 
-df.head()
-
 df['YoR'] = df['title'].str[-5:-1]
 
+list1 = []
+for i in df['title']:
+  sample = i.split('(')
+  list1.append(sample[0])
+print(list1)
+
+df['title'] = list1
+
+df = df.set_index('movieId')
+
+df.head()
+
 df.to_csv('movies1.csv')
+
+df['title'] = df['title'].apply(lambda x : x.replace(',',' '))
+
+for i in df['title']:
+  if i.__contains__(','):
+    print(i)
