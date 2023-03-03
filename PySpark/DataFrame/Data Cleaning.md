@@ -44,6 +44,8 @@
          .show(truncate=False)                   # Here it drops the records containing null values for multiple columns with subset keyword
 
       df.dropna().show(truncate=False)           # Here na is not used, still gives the same result.
+      
+      df.dropna(col('*'))  # Drops all the columns
 
 - Creating a view based on the existing dataframe to perform Sql operations using spark.sql: 
 
