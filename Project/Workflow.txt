@@ -1,0 +1,89 @@
+WorkFlow:
+---------
+
+Technologies used : 
+------------------
+
+* RDBMS (Source) 
+	
+	- Contains tables and relations.
+
+* Sqoop (To Transfer the data from RDBMS to Hive)
+
+* Hive (To Store the data and the resultant output)
+
+	- Hive acts as intermediate storage area to store source data and the processed data from Spark
+
+* Spark (Processing the data) by converting the input data to dataset(Not Supported) or dataframe(Python)
+
+	- Process the data from Hive, and the data can be converted as dataframe or RDD and processed with the help of dataframe fn's or spark.sql  
+
+* Scheduler (AutoSYS, Airflow)
+
+	- Schedule the job in a daily basis or hourly basis based on the client requirements.
+
+
+Deployment in Different Environment:
+------------------------------------
+
+* Scheduling to trigger the script File.
+
+	- Trigger file can be of any formats.
+
+		- If the logic is implemented in python, then .py file has to be triggered at specific time based on client requirement.
+
+		- If the logic is implemented in java or scala, then .sh file.
+
+		- If the logic is implemented using HiveQL, then .hql or .sql file will be triggered.
+
+	- Here in all the above cases, whatever the script file is triggered, the contents inside the script file will be executed.
+
+	- The contents can contain,
+
+		- Loading file from any storage space like HDFS or Hive or RDBMS or Local System, in any file formats like avro , sequencefile, ORC, RCFile,
+parquet, json or csv etc....
+
+		- The data can be converted to any data structure based on the processing layer, 
+		
+			- SPARK -> RDD , Dataframe (Python) , Dataset (Java or Scala) 
+
+				- Operations performed : RDD and DataFrame operations or spark.sql
+			
+				- Hive Context and Spark Context : With HiveContext in Spark, you can fetch tables from Hive and then use SparkContext functionality to process the data.  
+
+Example : The code part will be present inside the script file .py
+-------------------------------------------------------------------
+
+from pyspark.sql import HiveContext
+from pyspark import SparkContext
+
+# Create SparkContext
+sc = SparkContext(appName="Hive-Spark Integration")
+
+# Create HiveContext
+hive_context = HiveContext(sc)
+
+# Fetch a table from Hive
+table_df = hive_context.sql("SELECT * FROM my_hive_table")
+
+# Perform Spark operations on the resulting DataFrame
+result_df = table_df.filter(table_df['col1'] > 10).groupBy('col2').count()
+
+# Show the result
+result_df.show()
+
+# Stop the SparkContext
+sc.stop()
+
+				- Yarn (Yet Another Resource Negotiator) : It is complimentory processing tool for Spark. The daemons and the functionality also differs from Spark.
+
+		
+
+- And the scheduling of job will be performed in many environments like local, developer and testing and maintan before moving to prod environment.
+
+- The above environments are treated as individual clusters with different configurations. 
+
+
+
+
+

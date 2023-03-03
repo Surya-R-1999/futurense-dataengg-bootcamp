@@ -1,0 +1,18 @@
+jdbcDF = spark.read \
+  .format("jdbc") \
+  .option("url", "jdbc:mysql://localhost:3306/pyspark_training") \
+  .option("driver", "com.mysql.jdbc.Driver") \
+  .option("dbtable", "EMPLOYEE") \
+  .option("user", "pyspark") \
+  .option("password", "pyspark") \
+  .load()
+
+
+jdbcDF1.write \
+    .format("jdbc") \
+    .option("url", "jdbc:mysql://localhost:3306/pyspark_training") \
+	.option("driver", "com.mysql.jdbc.Driver") \
+    .option("dbtable", "EMPLOYEE1") \
+    .option("user", "pyspark") \
+    .option("password", "pyspark") \
+    .save()

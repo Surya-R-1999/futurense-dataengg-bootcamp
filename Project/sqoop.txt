@@ -1,0 +1,234 @@
+WorkFlow:
+-----------
+
+* Connecting MySql Server from CLI, 
+
+	sudo mysql -u root -p
+
+* Creating databases and tables in MySql
+
+* creating a sqoop user
+
+	CREATE USER 'sqoop'@'localhost' IDENTIFIED BY 'sqoop';
+	GRANT ALL PRIVILEGES ON *.* TO 'sqoop'@'localhost' WITH GRANT OPTION;
+
+* Accessing databases and tables,
+
+	sqoop list-databases --connect jdbc:mysql://localhost/ --username sqoop --password sqoop
+
+
+* Importing Structured data from RDBMS to HDFS:
+------------------------------------------------
+	#Import
+	sqoop import \
+	--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
+	--username sqoop \
+	--password sqoop \
+	--table EMPLOYEE \
+	--target-dir /user/training/sqoop \
+	--m 1
+
+By defuault it creates 4 Maps, So based on the size of data imported it creates partitions and stores in target directory.
+
+- So Once the job (or above script ) has been executed it creates a .java file consist of Map reduce job.
+
+- For every job creation it creates a directory. 
+
+- So to add data's we have to use incremental keyword to avoid "file already exists" .
+
+* Exporting data from HDFS to RDBMS:
+--------------------------------------
+
+sqoop export \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
+--username sqoop \
+--password sqoop \
+--table EMPMGMT \
+--export-dir /user/training/empmgmt/export
+
+* Constraints while Exporting:
+
+- No files has to be present in the target directory.
+
+- For every import or export or incremental import we have to create new directory manually.
+
+* Importing Incremental data from RDBMS to HDFS: ()
+------------------------------------------------
+
+In RDBMS:
+
+mysql> select * from COUNTRY;
++----+------+---------------+---------------------+
+| ID | CODE | NAME          | UPDATE_TIME         |
++----+------+---------------+---------------------+
+|  1 | IND  | India         | 2023-02-21 10:47:05 |
+|  2 | USA  | United States | 2023-02-21 10:47:05 |
+|  3 | AUS  | Australia     | 2023-02-21 10:47:05 |
+|  4 | CHN  | China         | 2023-02-21 10:47:07 |
++----+------+---------------+---------------------+
+4 rows in set (0.01 sec)
+
+Importing the above data to HDFS:
+---------------------------------
+
+sqoop import \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
+--username sqoop \
+--password sqoop \
+--table COUNTRY \
+--target-dir /user/training/sqoop-inc \
+--check-column UPDATE_TIME \
+--incremental lastmodified \
+--last-value '2021-07-14 12:12:38' \
+--m 1
+
+Inserting New Records in RDBMS:
+-------------------------------
+
+mysql> insert into COUNTRY values(5, 'CAN', 'CANADA', current_timestamp());
+
+Importing the above newly added data to HDFS in a new directory :
+------------------------------------------------------------------
+sqoop import \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
+--username sqoop \
+--password sqoop \
+--table COUNTRY \
+--target-dir /user/training/sqoop-inc2 \
+--check-column UPDATE_TIME \
+--incremental lastmodified \
+--last-value '2021-07-14 12:12:38' \
+--m 1
+
+Data present in the new directory:
+------------------------------------
+
+* old directory : 
+------------------
+
+miles@MILE-BL-4824-LAP:~$ hadoop fs -cat /user/training/sqoop-inc/part-m-*
+1,IND,India,2023-02-21 10:47:05.0
+2,USA,United States,2023-02-21 10:47:05.0
+3,AUS,Australia,2023-02-21 10:47:05.0
+4,CHN,China,2023-02-21 10:47:07.0
+
+
+* new directory:
+----------------
+
+miles@MILE-BL-4824-LAP:~$ hadoop fs -cat /user/training/sqoop-inc2/part-m-*
+1,IND,India,2023-02-21 10:47:05.0
+2,USA,United States,2023-02-21 10:47:05.0
+3,AUS,Australia,2023-02-21 10:47:05.0
+4,CHN,China,2023-02-21 10:47:07.0
+5,CAN,CANADA,2023-03-03 12:51:03.0
+
+* Appending the incremental data in same directory:
+----------------------------------------------------
+
+
+sqoop import \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
+--username sqoop \
+--password sqoop \
+--table COUNTRY \
+--target-dir /user/training/sqoop-inc \
+--check-column UPDATE_TIME \
+--incremental lastmodified \
+--last-value '2021-07-14 12:12:38' \
+--m 1 \
+--append
+
+* old directory :
+------------------
+
+miles@MILE-BL-4824-LAP:~$ hadoop fs -cat /user/training/sqoop-inc/part-m-*
+1,IND,India,2023-02-21 10:47:05.0
+2,USA,United States,2023-02-21 10:47:05.0
+3,AUS,Australia,2023-02-21 10:47:05.0
+4,CHN,China,2023-02-21 10:47:07.0
+1,IND,India,2023-02-21 10:47:05.0
+2,USA,United States,2023-02-21 10:47:05.0
+3,AUS,Australia,2023-02-21 10:47:05.0
+4,CHN,China,2023-02-21 10:47:07.0
+5,CAN,CANADA,2023-03-03 12:51:03.0
+
+
+* Adding the Incremental data using Append Mode:  (Old data and new data together) 
+-------------------------------------------------
+sqoop import \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
+--username sqoop \
+--password sqoop \
+--table COUNTRY \
+--target-dir /user/training/sqoop-inc \
+--check-column UPDATE_TIME \
+--incremental append \
+--m 1
+
+
+Another partition has been created in the same directory:
+---------------------------------------------------------
+
+miles@MILE-BL-4824-LAP:~$ hadoop fs -cat /user/training/sqoop-inc/part-m-00000
+1,IND,India,2023-02-21 10:47:05.0
+2,USA,United States,2023-02-21 10:47:05.0
+3,AUS,Australia,2023-02-21 10:47:05.0
+4,CHN,China,2023-02-21 10:47:07.0
+
+miles@MILE-BL-4824-LAP:~$ hadoop fs -cat /user/training/sqoop-inc/part-m-00001
+1,IND,India,2023-02-21 10:47:05.0
+2,USA,United States,2023-02-21 10:47:05.0
+3,AUS,Australia,2023-02-21 10:47:05.0
+4,CHN,China,2023-02-21 10:47:07.0
+5,CAN,CANADA,2023-03-03 12:51:03.0
+
+
+Here the incremental records can be specified by changing incremental lastmodified --last-value 'timestamp', 
+
+If the timestamp provided checks each record in table, the records which is greater than the provided value will be added to the directory.
+
+sqoop import \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
+--username sqoop \
+--password sqoop \
+--table COUNTRY \
+--target-dir /user/training/sqoop-inc \
+--check-column UPDATE_TIME \
+--incremental lastmodified \
+--last-value '2023-02-21 10:47:06' \
+--m 1 \
+--append
+
+* These 2 Records are greater than the last value, and stored in the new partition File.
+-----------------------------------------------------------------------------------------
+
+miles@MILE-BL-4824-LAP:~$ hadoop fs -cat /user/training/sqoop-inc/part-m-00002
+4,CHN,China,2023-02-21 10:47:07.0
+5,CAN,CANADA,2023-03-03 12:51:03.0
+
+
+*
+
+sqoop import \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
+--username sqoop \
+--password sqoop \
+--table COUNTRY \
+-- columns ColumnNames \                                -> Specific columns to be imported
+--target-dir /user/training/sqoop-inc \                   ----------------------------------
+--check-column UPDATE_TIME \
+--incremental lastmodified \                            -> lastmodified(only the records which satified conditions are appended) or append(Only new records are appended)
+--last-value '2023-02-21 10:47:06' \                       --------------------------------------------------------------------------------------------------------------
+--m 1 \
+--append
+-- as file_format                                       -> Saving data to hdfs in the corresponding file format, such as avro, parquet
+                                                           -----------------------------------------------------------------------------
+
+* Another way to import only the filtered records using,
+----------------------------------------------------------
+-- Query "sql cmd" \ -> result is stored in the different partition file.
+
+
+
+

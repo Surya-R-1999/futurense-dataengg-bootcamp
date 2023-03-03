@@ -1,0 +1,32 @@
+* Pipeline Architecture:
+-------------------------
+
+* CSV -> Data Ingestion -> Parquet File Format (Output) -> Cleaning and Validation -> Parquet File format (Output) -> Transformation -> CSV File format(Final Output)
+
+- The Input file (CSV) can be imported from RDBMS etc.. using SQOOP. (Performs Map Reduce Jobs Internally)
+
+- Since it performs Map Reduce Job, HDFS and Yarn daemons has to be started. 
+
+* 3 Stages : 
+------------
+	
+	- Data ingestion
+	
+	- Cleaning and Validation
+	
+	- Transformation (Into RDD or DataFrames and perform corresponding Functions or spark.sql )
+
+* For Every Stage the Input and Output File Format Varies based on the client requirements.
+
+* Scheduling:
+-------------
+
+	- Scheduling each and every Stages individually.
+
+	- Predicting the timetaken for each Stage is uncertain, because the size of the imput data varies.
+
+	- Creating a Shell Script File, and implementing all the stages and their functionalities in the order.
+
+	- Airflow and Oozie are schedulers which replaces shell script later.
+
+   
