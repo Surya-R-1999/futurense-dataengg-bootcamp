@@ -118,3 +118,11 @@ Inference:
 
 - Since it is a streaming data, we have to manually start and stop the ssc.
 
+
+# Stateless
+
+- Dstreams are stateless, since they don't recall the last dstream values.
+
+- Transformations and actions are performed for every dstreams and the results are produced for each dstream.
+
+- 
