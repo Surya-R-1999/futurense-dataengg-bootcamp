@@ -95,8 +95,11 @@ counts = lines.flatMap(lambda line: line.split(" "))\
                   .map(lambda word: (word, 1))\
                   .reduceByKey(lambda a, b: a+b)
 
+counts.pprint()
+
 
 ssc.start() -> ACtual Stream Processing STarts.
+
 
  
 ssc.stop()
@@ -115,3 +118,11 @@ Inference:
 
 - Since it is a streaming data, we have to manually start and stop the ssc.
 
+
+# Stateless
+
+- Dstreams are stateless, since they don't recall the last dstream values.
+
+- Transformations and actions are performed for every dstreams and the results are produced for each dstream.
+
+- 
