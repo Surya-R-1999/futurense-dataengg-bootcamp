@@ -1,0 +1,44 @@
+Assignment #1
+	Weather Data Analysis with DataFrame API
+	a) Load Weather Dataset and create DataFrame
+	b) Show Min and Max Temperature
+	c) Show month wise Min and Max Temperature
+
+Assignment #2
+	Bank Marketing Campaign Data Analysis with DataFrame API
+	a) Load Bank Marketing Dataset and create DataFrame		
+	b) Give marketing success rate. (No. of people subscribed / total no. of entries)
+	c) Give marketing failure rate
+	d) Maximum, Mean, and Minimum age of the average targeted customer
+	e) Check the quality of customers by checking the average balance, median balance of customers
+	f) Check if age matters in marketing subscription for deposit
+	g) Show AgeGroup [Teenagers, Youngsters, MiddleAgers, Seniors] wise Subscription Count.
+	g) Check if marital status mattered for subscription to deposit.
+	h) Check if age and marital status together mattered for subscription to deposit scheme
+	
+
+Assignment #3
+
+	Bank Marketing Campaign Data Analysis with PySpark SQL
+
+	Create PySpark Application - bank-marketing-analysis.py. Perform below operations.
+	a) Load Bank Marketing Campaign Data from csv file
+	b) Get AgeGroup wise SubscriptionCount
+	c) Write the output in parquet file format
+	d) Load the data from parquet file written above
+	e) Show the data
+	f) Filter AgeGroup with SubcriptionCount > 2000 and write into Avro file format
+	g) Load the data from avro file written above
+	h) Show the data
+
+	1] spark-submit bank-marketing-analysis.py => Runs in local mode
+	2] Run in cluster mode
+	3] Schedule to PySparkApplication to run every N mins
+
+
+
+
+
+
+
+

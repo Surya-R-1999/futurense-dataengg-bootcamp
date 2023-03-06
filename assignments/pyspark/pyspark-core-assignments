@@ -1,0 +1,23 @@
+Assignment #1
+	Weather Data Analysis with RDD API
+	a) Load Weather Dataset and create RDD
+	b) Show Min and Max Temperature
+	c) Show month wise Min and Max Temperature
+
+Assignment #2
+	Bank Marketing Campaign Data Analysis with RDD API
+	a) Load Bank Marketing Dataset and create RDD		
+	b) Give marketing success rate. (No. of people subscribed / total no. of entries)
+	c) Give marketing failure rate
+	d) Maximum, Mean, and Minimum age of the average targeted customer
+	e) Check the quality of customers by checking the average balance, median balance of customers
+	f) Check if age matters in marketing subscription for deposit
+	g) Show AgeGroup [Teenagers, Youngsters, MiddleAgers, Seniors] wise Subscription Count.
+	g) Check if marital status mattered for subscription to deposit.
+	h) Check if age and marital status together mattered for subscription to deposit scheme
+
+
+
+
+
+
