@@ -75,9 +75,31 @@
 - 	a) Load validated Bank Marketing Campaign Data in Parquet format from HDFS file system under '/user/training/bankmarketing/validated'
 - 	b) Get AgeGroup wise SubscriptionCount
 - 	c) Filter AgeGroup with SubcriptionCount > 2000 
--	  d) Write the output as Avro format into HDFS file system under '/user/training/bankmarketing/processed'
+-	 d) Write the output as Avro format into HDFS file system under '/user/training/bankmarketing/processed'
 - 	e) Data should be moved to '/user/training/bankmarketing/validated/yyyymmdd/success' once the trasnfomation job completed successfully
 - 	f) Data should be moved to '/user/training/bankmarketing/validated/yyyymmdd/error' once the transformation job is failed
+ 
+- Note: Start Spark Shell with Avro dependency
+-       pyspark --packages org.apache.spark:spark-avro_2.12:3.3.2
+ 
+       import subprocess
+            import pyspark
+            from pyspark.sql import SparkSession
+            from pyspark.sql.functions import *
 
-
-
+       spark = SparkSession.builder.master("local[1]") \
+                           .appName('pyspark-examples') \
+                           .getOrCreate()
+ 
+       df = spark.read.load("hdfs://localhost:9000/user/training/bankmarketing/validated", format = "parquet")
+       df.createOrReplaceTempView("Banking_Filter")
+       spark.sql("SELECT  from Banking_Filter")
+       
+       age_group_count = spark.sql("SELECT age, count(y) from Banking_Filter group by age").show()
+       
+       age_group_count_gt_2000 = spark.sql("SELECT age, count(y) from Banking_Filter group by age having count(y) > 2000").show()
+       
+       age_group_count.write.mode('overwrite').format('avro').save('hdfs://localhost:9000/user/training/bankmarketing/processed')
+       
+       
+       
