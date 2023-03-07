@@ -88,3 +88,91 @@
               .option("checkpointLocation", "checkpoint") \
               .option('truncate', 'false')\
               .start()
+
+- Loans Example:
+
+      from pyspark.sql import SparkSession
+      from pyspark.sql.types import TimestampType, StringType, StructField, StructType
+      from pyspark.sql.functions import window
+      from pyspark.sql.types import *
+
+
+      spark = SparkSession \
+          .builder \
+          .appName("LoanStreamingAnalysis") \
+          .getOrCreate()
+
+
+      schema = StructType([ StructField("time", TimestampType(), True),
+                            StructField("customer", StringType(), True),
+                            StructField("loanId", StringType(), True),
+                            StructField("status", StringType(), True)])
+
+      loansStreamingDF = (
+        spark
+          .readStream
+          .schema(schema)
+          .option("maxFilesPerTrigger", 1)
+          .json("/mnt/c/Users/miles/Documents/futurense_hadoop-pyspark/labs/dataset/loan/")
+      )
+
+      loanStatusCountsDF = (
+        loansStreamingDF
+          .groupBy(
+            loansStreamingDF.status
+          )
+          .count()
+      )
+
+      query = (
+        loanStatusCountsDF
+          .writeStream
+          .format("console")
+          .outputMode("complete")
+          .start()
+      )
+
+      query.awaitTermination()
+      
+- Loans Watermarked Example:
+
+      from pyspark.sql import SparkSession
+      from pyspark.sql.types import TimestampType, StringType, StructField, StructType
+      from pyspark.sql.functions import window
+      from pyspark.sql.types import *
+
+
+      spark = SparkSession \
+          .builder \
+          .appName("LoanStreamingAnalysis") \
+          .getOrCreate()
+
+
+      schema = StructType([ StructField("time", TimestampType(), True),
+                            StructField("customer", StringType(), True),
+                            StructField("loanId", StringType(), True),
+                            StructField("status", StringType(), True)])
+
+
+      loansStreamingDF = (
+        spark
+          .readStream
+          .schema(schema)
+          .option("maxFilesPerTrigger", 1)
+          .json("/mnt/c/Users/miles/Documents/futurense_hadoop-pyspark/labs/dataset/loan/")
+      )
+
+      loanStatusCountsWindowedDF = loansStreamingDF.withWatermark("time", "30 seconds") \
+          .groupBy( \
+          window(loansStreamingDF.time, "10 seconds", "5 seconds"),
+          loansStreamingDF.status
+      ).count().orderBy('window')
+
+      query = (
+        loanStatusCountsWindowedDF
+          .writeStream
+          .format("console")
+          .outputMode('complete')
+          .start()
+      )
+      query.awaitTermination()
