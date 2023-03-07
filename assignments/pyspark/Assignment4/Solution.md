@@ -145,7 +145,7 @@
 - a) Create a workflow to sequentially execute Data Loading, Validation, Tranformation and Export jobs
 - b) Schedule to run this workflow every N mins e.g. 15 mins and process the new input dataset if any
 
-       echo "*** Started Execution *****"
+      echo "*** Started Execution *****"
 
       echo "bank-marketing-data-loading.py"
       spark-submit  "/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/pyspark/Assignment4/bank-marketing-data-loading.py"
