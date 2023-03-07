@@ -26,3 +26,5 @@
             hadoop fs -put /mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/pyspark/Assignment4/bankmarketdata.csv                    hdfs://localhost:9000/user/training/bankmarketing/raw/yyyymmdd/success
           except:
             hadoop fs -put /mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/pyspark/Assignment4/bankmarketdata.csv hdfs://localhost:9000/user/training/bankmarketing/raw/yyyymmdd/failure
+
+  
