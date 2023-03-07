@@ -17,3 +17,7 @@
                               
           hadoop fs -put bankmarketdata.csv hdfs://localhost:9000/user/training/bankmarketing/raw
           
+          df = spark.read.load("hdfs://localhost:9000/user/training/bankmarketing/raw/bankmarketdata.csv",format = "csv", sep = ";", delimiter=';',header=True,inf
+          erSchema=True)
+          
+          
