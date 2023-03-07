@@ -5,11 +5,11 @@
 
 - Create PySpark Application - bank-marketing-data-loading.py. Perform below operations.
 
-  - 	a) Load Bank Marketing Campaign Data csv file from local to HDFS file system under '/user/training/bankmarketing/raw'
-  - 	b) Load Bank Marketing Campaign Data from HDFS file system under '/user/training/bankmarketing/raw' and create DataFrame
-  - 	c) Convert the data into parquet format and write into HDFS file system under '/user/training/bankmarketing/staging'
-  - 	d) Data should be moved to '/user/training/bankmarketing/raw/yyyymmdd/success' once the data loading job completed successfully
-  - 	f) Data should be moved to '/user/training/bankmarketing/raw/yyyymmdd/error' once the data loading job is failed due to data error
+ - 	a) Load Bank Marketing Campaign Data csv file from local to HDFS file system under '/user/training/bankmarketing/raw'
+ - 	b) Load Bank Marketing Campaign Data from HDFS file system under '/user/training/bankmarketing/raw' and create DataFrame
+ - 	c) Convert the data into parquet format and write into HDFS file system under '/user/training/bankmarketing/staging'
+ - 	d) Data should be moved to '/user/training/bankmarketing/raw/yyyymmdd/success' once the data loading job completed successfully
+ - 	f) Data should be moved to '/user/training/bankmarketing/raw/yyyymmdd/error' once the data loading job is failed due to data error
   
           import subprocess
           import pyspark
@@ -37,12 +37,12 @@
 
 
 - 	Create PySpark Application - bank-marketing-validation.py. Perform below operations.
-    - 	a) Load Bank Marketing Campaign Data in Parquet format from HDFS file system under '/user/training/bankmarketing/staging'
-    - 	b) Remove all 'unknown' job records 
-    - 	c) Replace 'unknown' contact nos with 1234567890 and 'unknown' poutcome with 'na'
-    - 	d) Write the output as Parquet format into HDFS file system under '/user/training/bankmarketing/validated'
-    - 	e) Data should be moved to '/user/training/bankmarketing/staging/yyyymmdd/success' once the validation job completed successfully
-    - 	f) Data should be moved to '/user/training/bankmarketing/staging/yyyymmdd/error' once the validation job is failed due to data error
+- 	a) Load Bank Marketing Campaign Data in Parquet format from HDFS file system under '/user/training/bankmarketing/staging'
+- 	b) Remove all 'unknown' job records 
+- 	c) Replace 'unknown' contact nos with 1234567890 and 'unknown' poutcome with 'na'
+- 	d) Write the output as Parquet format into HDFS file system under '/user/training/bankmarketing/validated'
+- 	e) Data should be moved to '/user/training/bankmarketing/staging/yyyymmdd/success' once the validation job completed successfully
+- 	f) Data should be moved to '/user/training/bankmarketing/staging/yyyymmdd/error' once the validation job is failed due to data error
 
 
             import subprocess
@@ -72,12 +72,12 @@
               df3.write.mode('overwrite').format('parquet').save('hdfs://localhost:9000/user/training/bankmarketing/staging/yyyymmdd/failure')
  
 - Create PySpark Application - bank-marketing-tranformation.py. Perform below operations.
-    - 	a) Load validated Bank Marketing Campaign Data in Parquet format from HDFS file system under '/user/training/bankmarketing/validated'
-    - 	b) Get AgeGroup wise SubscriptionCount
-    - 	c) Filter AgeGroup with SubcriptionCount > 2000 
-    -	  d) Write the output as Avro format into HDFS file system under '/user/training/bankmarketing/processed'
-    - 	e) Data should be moved to '/user/training/bankmarketing/validated/yyyymmdd/success' once the trasnfomation job completed successfully
-    - 	f) Data should be moved to '/user/training/bankmarketing/validated/yyyymmdd/error' once the transformation job is failed
+- 	a) Load validated Bank Marketing Campaign Data in Parquet format from HDFS file system under '/user/training/bankmarketing/validated'
+- 	b) Get AgeGroup wise SubscriptionCount
+- 	c) Filter AgeGroup with SubcriptionCount > 2000 
+-	  d) Write the output as Avro format into HDFS file system under '/user/training/bankmarketing/processed'
+- 	e) Data should be moved to '/user/training/bankmarketing/validated/yyyymmdd/success' once the trasnfomation job completed successfully
+- 	f) Data should be moved to '/user/training/bankmarketing/validated/yyyymmdd/error' once the transformation job is failed
 
 
 
