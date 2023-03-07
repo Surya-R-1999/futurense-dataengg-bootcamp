@@ -65,10 +65,10 @@
         df3 = df3.withColumn('poutcome', regexp_replace('poutcome', 'unknown', 'na'))
         
         try:
-          df3.write.format('parquet').save('hdfs://localhost:9000/user/training/bankmarketing/staging/yyyymmdd/success')
+          df3.write.mode('overwrite').format('parquet').save('hdfs://localhost:9000/user/training/bankmarketing/staging/yyyymmdd/success')
         except:
-          df3.write.format('parquet').save('hdfs://localhost:9000/user/training/bankmarketing/staging/yyyymmdd/failure')
+          df3.write.mode('overwrite').format('parquet').save('hdfs://localhost:9000/user/training/bankmarketing/staging/yyyymmdd/failure')
           
-        df3.write.format('parquet').save("hdfs://localhost:9000/user/training/bankmarketing/validated")
+        df3.write.mode('overwrite').format('parquet').save("hdfs://localhost:9000/user/training/bankmarketing/validated")
         
         
