@@ -117,9 +117,9 @@
       
       df.write \
       .format("jdbc") \
-      .option("url", "jdbc:mysql://localhost:3306/banking_analysis") \
+      .option("url", "jdbc:mysql://localhost:3306/bankmarketing") \
       .option("driver", "com.mysql.jdbc.Driver") \
-      .option("dbtable", "age_group_count") \
+      .option("dbtable", "subscription_count") \
       .option("user", "pyspark") \
       .option("password", "pyspark") \
       .mode("overwrite") \
