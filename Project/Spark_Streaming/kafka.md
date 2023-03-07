@@ -5,6 +5,18 @@
 - Creating Kafka Topic:
 
       bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic wordCount
+      
+- List Topics
+
+      bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+
+- Describe Topic
+      
+      bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic wordCount
+
+- Produce Message
+      
+      bin/kafka-console-producer.sh --broker-list localhost:9092 --topic wordCount
     
 - PySpark Shell:
   
