@@ -2,6 +2,8 @@
 
 - Using kafka, implementing word Count program
 
+- Creating Kafka Topic:
+
       bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic wordCount
     
 - PySpark Shell:
@@ -26,5 +28,18 @@
         .load()\
         .selectExpr("CAST(value AS STRING)")    
         
-       
+      words = lines.select(
+        # explode turns each item in an array into a separate row
+        explode(
+            split(lines.value, ' ')
+        ).alias('word')
+      )
       
+      wordCounts = words.groupBy('word').count()
+      
+      
+      query = wordCounts\
+        .writeStream\
+        .outputMode('complete')\
+        .format('console')\
+        .start()
