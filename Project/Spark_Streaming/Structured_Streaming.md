@@ -41,7 +41,7 @@
        ).count().orderBy('window')
        
        query = windowedCounts\
-        .writeStream\                     # the stream started.
+        .writeStream\
         .outputMode('complete')\
         .format('console') \
         .option("checkpointLocation", "checkpoint") \
