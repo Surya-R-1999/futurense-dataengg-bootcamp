@@ -11,6 +11,7 @@
  - 	d) Data should be moved to '/user/training/bankmarketing/raw/yyyymmdd/success' once the data loading job completed successfully
  - 	f) Data should be moved to '/user/training/bankmarketing/raw/yyyymmdd/error' once the data loading job is failed due to data error
   
+  
           import subprocess
           import pyspark
           from pyspark.sql import SparkSession
@@ -112,7 +113,7 @@
 - b) Export the data into RDBMS (MySQL DB) under bankmaketing schema and subcription_count table
 - c) Data should be moved to '/user/training/bankmarketing/processed/yyyymmdd/success' once the export job completed successfully
 - d) Data should be moved to '/user/training/bankmarketing/processed/yyyymmdd/error' once the export job is failed
-
+- spark-submit --jars "/home/miles/mysql-connector-j-8.0.32/mysql-connector-j-8.0.32.jar" --packages org.apache.spark:spark-avro_2.12:3.3.2 bank-marketing-export.py
      
       import subprocess
       import pyspark
@@ -140,3 +141,43 @@
       except:
        df.write.mode('overwrite').format('parquet').save('hdfs://localhost:9000/user/training/bankmarketing/processed/yyyymmdd/failure')
  
+- Create Shell Script - bank-marketing-workflow.sh. Performa below operations.
+- a) Create a workflow to sequentially execute Data Loading, Validation, Tranformation and Export jobs
+- b) Schedule to run this workflow every N mins e.g. 15 mins and process the new input dataset if any
+
+       echo "*** Started Execution *****"
+
+      echo "bank-marketing-data-loading.py"
+      spark-submit  "/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/pyspark/Assignment4/bank-marketing-data-loading.py"
+
+      if [ $? -eq 0 ]
+      then
+          echo "executing bank-marketing-validation.py"
+          spark-submit "/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/pyspark/Assignment4/bank-marketing-validation.py"
+
+          if [ $? -eq 0 ]
+          then
+              echo "executing bank-marketing-tranformation.py"
+              spark-submit  --packages org.apache.spark:spark-avro_2.12:3.3.2 "/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/pyspark/Assignment4/bank-marketing-tranformation.py"
+
+              if [ $? -eq 0 ]
+              then
+                  echo "executing bank-marketing-export.py"
+                  spark-submit --jars "/home/miles/mysql-connector-j-8.0.32/mysql-connector-j-8.0.32.jar"  --packages org.apache.spark:spark-avro_2.12:3.3.2 "/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/assignments/pyspark/Assignment4/bank-marketing-export.py"
+
+                  if [ $? -eq 0 ]
+                  then
+                      echo  "All Jobs done"
+                  else
+                      echo "============== ERROR in bank_export.py  ==================="
+                  fi
+              else
+                  echo "============== ERROR in bank_transformation.py  ==================="
+              fi
+          else
+              echo "================ ERROR in bank_cleaning.py  ===================="
+          fi
+      else
+          echo "================ ERROR in FILE bank_load.py =================="
+      fi
+      echo "Good Work :)"
