@@ -95,7 +95,7 @@
        df.createOrReplaceTempView("Banking_Filter")
        spark.sql("SELECT  from Banking_Filter")
        
-       age_group_count = spark.sql("SELECT age, count(y) from Banking_Filter group by age").show()
+       aage_group_count = spark.sql("SELECT age, count(y) as count from Banking_Filter group by age")
        
        age_group_count_gt_2000 = spark.sql("SELECT age, count(y) from Banking_Filter group by age having count(y) > 2000").show()
        
