@@ -101,5 +101,10 @@
        
        age_group_count.write.mode('overwrite').format('avro').save('hdfs://localhost:9000/user/training/bankmarketing/processed')
        
+       try:
+        age_group_count.write.mode('overwrite').format('parquet').save('hdfs://localhost:9000/user/training/bankmarketing/processed/yyyymmdd/success')
+       except:
+        age_group_count.write.mode('overwrite').format('parquet').save('hdfs://localhost:9000/user/training/bankmarketing/processed/yyyymmdd/failure')
+ 
        
        
