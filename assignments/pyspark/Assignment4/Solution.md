@@ -64,11 +64,20 @@
 
         df3 = df3.withColumn('poutcome', regexp_replace('poutcome', 'unknown', 'na'))
         
+        df3.write.mode('overwrite').format('parquet').save("hdfs://localhost:9000/user/training/bankmarketing/validated")
+        
         try:
           df3.write.mode('overwrite').format('parquet').save('hdfs://localhost:9000/user/training/bankmarketing/staging/yyyymmdd/success')
         except:
           df3.write.mode('overwrite').format('parquet').save('hdfs://localhost:9000/user/training/bankmarketing/staging/yyyymmdd/failure')
-          
-        df3.write.mode('overwrite').format('parquet').save("hdfs://localhost:9000/user/training/bankmarketing/validated")
+ 
+- Create PySpark Application - bank-marketing-tranformation.py. Perform below operations.
+- 	a) Load validated Bank Marketing Campaign Data in Parquet format from HDFS file system under '/user/training/bankmarketing/validated'
+- 	b) Get AgeGroup wise SubscriptionCount
+- 	c) Filter AgeGroup with SubcriptionCount > 2000 
+-	  d) Write the output as Avro format into HDFS file system under '/user/training/bankmarketing/processed'
+- 	e) Data should be moved to '/user/training/bankmarketing/validated/yyyymmdd/success' once the trasnfomation job completed successfully
+- 	f) Data should be moved to '/user/training/bankmarketing/validated/yyyymmdd/error' once the transformation job is failed
+        
         
         
