@@ -113,6 +113,16 @@
 - c) Data should be moved to '/user/training/bankmarketing/processed/yyyymmdd/success' once the export job completed successfully
 - d) Data should be moved to '/user/training/bankmarketing/processed/yyyymmdd/error' once the export job is failed
 
+     
+      import subprocess
+      import pyspark
+      from pyspark.sql import SparkSession
+      from pyspark.sql.functions import *
+
+      spark = SparkSession.builder.master("local[1]") \
+                           .appName('pyspark-examples') \
+                           .getOrCreate()
+                           
       df = spark.read.load("hdfs://localhost:9000/user/training/bankmarketing/processed", format = "avro")
       
       df.write \
