@@ -7,5 +7,13 @@
   
   - a.
         
+          import pyspark
+          from pyspark.sql import SparkSession
+          from pyspark.sql.functions import *
+
+          spark = SparkSession.builder.master("local[1]") \
+                              .appName('pyspark-examples') \
+                              .getOrCreate()
+                              
           hadoop fs -put bankmarketdata.csv hdfs://localhost:9000/user/training/bankmarketing/raw
-  
+          
