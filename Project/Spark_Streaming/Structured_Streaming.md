@@ -24,7 +24,7 @@
       lines = spark\
         .readStream\
         .format('socket')\
-        .option('host', "localhosts")\
+        .option('host', "localhost")\
         .option('port', 9999)\
         .option('includeTimestamp', 'true')\
         .load()
