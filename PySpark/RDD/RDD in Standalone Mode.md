@@ -8,7 +8,7 @@
 
 - The distribution of data among the Worker Nodes takes place before parallel processing.
 
-- The Spark read the input file and creates a logical partitions and stores in the worker Nodes.
+- The Spark's Driver Program read the input file and creates a logical partitions and stores in the worker Nodes.
 
 - The Number of logical partitions may or may not be equal with the Worker Nodes. Eg : 4 partitions of data can be stored in 3 worker Nodes is a possibility.
 
