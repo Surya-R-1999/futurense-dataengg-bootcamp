@@ -55,4 +55,39 @@
                 index = (((rdd4.count() + 1) // 2) + (rdd4.count() // 2)) // 2  
                 median_Age = rdd4.map(lambda x : x[5]).sortBy(lambda x : x, False).collect()[index]
                 print("Median Age : " + str(rdd4.map(lambda x : x[5]).collect()[index]))
-        #  
+        
+        
+        #Check if age matters in marketing subscription for deposit
+ 	
+        #Show AgeGroup [Teenagers, Youngsters, MiddleAgers, Seniors] wise Subscription Count.
+        
+        def AgeGroup(age):
+             if age <= 20:
+		group = "Teenagers"
+	     elif age > 20 and age <= 40:
+		group = "Youngsters"
+	     elif age > 40 and age <= 60:
+		group = "Middleagers"
+	     else:
+		group = "Seniors"
+	     return group
+        
+         rdd5 = rdd4.filter(lambda x : 'yes' in x[16]).map(lambda x : (AgeGroup(int(x[0])), 1))
+         rdd5.reduceByKey(lambda x,y : x+y).collect()
+
+        # Check if marital status mattered for subscription to deposit.
+        
+        rdd6 = rdd4.filter(lambda x : 'yes' in x[16]).map(lambda x : (x[2], 1))
+        rdd6.reduceByKey(lambda a,b : a+b).collect()
+        
+        # Check if age and marital status together mattered for subscription to deposit scheme
+        
+        rdd7 = rdd4.filter(lambda x : 'yes' in x[16]).map(lambda x : ((AgeGroup(int(x[0])),x[2]),1))
+        rdd7.reduceByKey(lambda a,b : a+b).collect()
+        
+        
+        
+        
+        
+        
+        
