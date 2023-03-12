@@ -43,5 +43,16 @@
         max_age = rdd4.map(lambda x : int(x[0])).max()
         min_age = rdd4.map(lambda x : int(x[0])).min()
         avg_age = rdd4.map(lambda x : int(x[0])).mean()
+        print(max_age, min_age, avg_age)
         
-        #
+        # Avg and Median Balance of Customers.
+        avg_balance = rdd4.map(lambda x : int(x[5])).mean()
+        # Median Balance
+        if rdd4.count() % 2 != 0:
+                index = (rdd4.count() + 1) // 2
+                print("Median Age : " + str(rdd4.map(lambda x : x[5])sortBy(lambda x: x, False).collect()[index]))
+        else:
+                index = (((rdd4.count() + 1) // 2) + (rdd4.count() // 2)) // 2  
+                median_Age = rdd4.map(lambda x : x[5]).sortBy(lambda x : x, False).collect()[index]
+                print("Median Age : " + str(rdd4.map(lambda x : x[5]).collect()[index]))
+        #  
