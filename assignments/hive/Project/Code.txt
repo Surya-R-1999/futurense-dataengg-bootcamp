@@ -1,0 +1,176 @@
+1)
+create external table query_1
+(diseaseName string,
+ratio double)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+LOCATION '/user/hive/warehouse/query_1'
+
+INSERT OVERWRITE table query_1 
+SELECT d.diseaseName, ROUND(SUM(IF(p.gender='male',1,0))/(SUM(IF(p.gender='female',1,0))),2) as Ratio
+FROM Treatment t 
+JOIN Disease d
+ON t.diseaseID = d.diseaseID
+JOIN Person p
+ON p.personID = t.patientID
+GROUP BY d.diseaseName
+ORDER BY Ratio DESC;
+
+CREATE TABLE query_1 (diseaseName VARCHAR(50),ratio float)
+
+sqoop export \
+--connect jdbc:mysql://localhost:3306/healthcare \
+--username root \
+--password cloudera \
+--table query_1 \
+--export-dir /user/hive/warehouse/query_1/000000_0;
+
+2)
+
+- Hive Shell (Analyzing)
+--------------------------
+
+create external table query_2
+(Gender string, Total_Claims int, Total_treatments int, Ratio float)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+LOCATION '/user/hive/warehouse/query_2'
+
+
+with cte_table2 as
+(select p.`gender` as Gender, c.`claimID` as Claims, t.`treatmentID` as treatments 
+FROM person p join treatment t on p.`personID` = t.`patientID`
+LEFT JOIN claim c on t.`claimID` = c.`claimID`
+)INSERT OVERWRITE table query_2
+select Gender, count(`Claims`) as Total_Number_of_Claims, 
+count(`treatments`) as Total_Number_of_treatments, 
+count(`treatments`)/count(`Claims`) as Ratio
+from cte_table2
+group by Gender;
+
+- MySQL (Client DB)
+
+CREATE TABLE query_2 (Gender VARCHAR(20), Total_Claims int, Total_treatments int, Ratio float)
+
+- SQOOP Export (ETL):
+
+sqoop export \
+--connect jdbc:mysql://localhost:3306/healthcare \
+--username root \
+--password cloudera \
+--table query_2 \
+--export-dir /user/hive/warehouse/query_2/000000_0;
+
+3)
+
+Query:
+---------
+create external table query_3
+(city String, Number_of_patients int, Percentage float)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+LOCATION '/user/hive/warehouse/query_3';
+
+INSERT OVERWRITE table query_3
+SELECT city, COUNT(`personID`) as No_of_Patients, ROUND(COUNT(`patientID`)/COUNT(`personID`)*100,2) as Percentage
+FROM address a
+INNER JOIN person pe on pe.addressID = a.addressID
+LEFT JOIN patient pa ON pe.`personID`=pa.`patientID`
+GROUP BY city
+HAVING No_Of_Patients >10;
+
+
+
+MySQL:
+------
+Create table query_3(city VARCHAR(30), Number_of_patients int, Percentage float);
+
+SQOOP EXPORT:
+----------------
+
+sqoop export \
+--connect jdbc:mysql://localhost:3306/healthcare \
+--username root \
+--password cloudera \
+--table query_3 \
+--export-dir /user/hive/warehouse/query_3/000000_0;
+
+4)
+
+CREATE TABLE IF NOT EXISTS ADDRESS_PART (addressId int, address String, city String, zip int)
+COMMENT 'Address details'
+PARTITIONED BY (State String) CLUSTERED BY (addressID) INTO 3 BUCKETS
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+insert into ADDRESS_PART partition(state) select addressId, address1, city,zip, state from address;
+
+create external table query_4
+(city String, Number_of_patients int, Percentage float)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+LOCATION '/user/hive/warehouse/query_4';
+
+INSERT OVERWRITE table query_4
+SELECT city, COUNT(`personID`) as No_of_Patients, ROUND(COUNT(`patientID`)/COUNT(`personID`)*100,2) as Percentage
+FROM ADDRESS_PART a
+INNER JOIN person pe on pe.addressID = a.addressID
+LEFT JOIN patient pa ON pe.`personID`=pa.`patientID`
+GROUP BY city
+HAVING No_Of_Patients >10;
+
+MySQL:
+-----
+Create table query_4(city VARCHAR(30), Number_of_patients int, Percentage float);
+
+
+SQOOP EXPORT:
+----------------
+
+sqoop export \
+--connect jdbc:mysql://localhost:3306/healthcare \
+--username root \
+--password cloudera \
+--table query_4 \
+--export-dir /user/hive/warehouse/query_4/000000_0;
+
+
+5)
+CREATE TABLE IF NOT EXISTS ADDRESS_PART_CITY (addressId int, address String, state String, zip int)
+COMMENT 'Address details'
+PARTITIONED BY (city String) CLUSTERED BY (addressID) INTO 3 BUCKETS
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+insert into ADDRESS_PART_CITY partition(city) select addressId, address1,zip,state,city from address;
+
+create external table query_5
+(city String, Number_of_patients int, Percentage float)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+LOCATION '/user/hive/warehouse/query_5';
+
+INSERT OVERWRITE table query_5
+SELECT city, COUNT(`personID`) as No_of_Patients, ROUND(COUNT(`patientID`)/COUNT(`personID`)*100,2) as Percentage
+FROM ADDRESS_PART_CITY a
+INNER JOIN person pe on pe.addressID = a.addressID
+LEFT JOIN patient pa ON pe.`personID`=pa.`patientID`
+GROUP BY city
+HAVING No_Of_Patients >10;
+
+5)
+
+CREATE TABLE IF NOT EXISTS treatment_clus (treatment int, date date,diseaseId INT, claimId Bigint)
+COMMENT 'Employee details'
+PARTITIONED BY (patientId INT) CLUSTERED BY (diseaseId) INTO 3 BUCKETS
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+insert into treatment_clus partition(patientId) select treatmentid,date,diseaseid,claimid,patientId from treatment;
+ 
