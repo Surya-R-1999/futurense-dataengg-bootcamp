@@ -24,6 +24,8 @@
 
 # Case:2 Tables are imported from Local to Snowflake WareHouse
 
+        
+
          CREATE OR REPLACE TABLE sales(
          Region varchar(80),
          Country varchar(80),Item_Type varchar(80),Sales_Channel varchar(80),Order_Priority varchar(80),Order_Date varchar(25),Order_ID varchar(80),Ship_Date varchar(25),Units_Sold int,Unit_Price int,Unit_Cost int,Total_Revenue int,Total_Cost int,Total_Profit int
