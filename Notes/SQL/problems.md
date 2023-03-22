@@ -17,7 +17,6 @@
             select max(salary) as SecondHighestSalary from Employee where salary < (select max(salary) from Employee)
 
 - 4)  A company’s executives are interested in seeing who earns the most money in each of the company’s departments. A high earner in a department is an employee who has a salary in the top three unique salaries for that department. Write an SQL query to find the employees who are high earners in each of the departments. 
-
    
             select Department, Employee, Salary  from
             (select d.name as Department, e.name as Employee, e.salary as Salary, dense_rank() over(partition by e.departmentId order by e.salary desc) as rnk
@@ -26,3 +25,13 @@
             on e.departmentId = d.id) derived_table
             where rnk <= 3
             order by Salary desc
+            
+- 5) The Employee table holds all employees including their managers. Every employee has an Id, and there is also a column for the manager Id.
+
+            select e2.name as Employee
+            from Employee e1 
+            join Employee e2
+            on e1.id = e2.managerId 
+            where e1.salary < e2.salary
+ 
+- 6) 
