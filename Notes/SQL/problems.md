@@ -84,9 +84,9 @@ URL: https://lifewithdata.com/2021/08/03/sql-interview-questions-leetcode-550-ga
             JOIN cte 
             ON a.player_id = cte.player_id
 
-   - Here the cte contains the player_id and the first login date of each player  with the help of min agg fn and group by clause of player_id
-   - Join query is for finding consecutive logins and used a case fn if it's true else 0, and sum() agg fn is used to sum up the case column
-   - Atlast to find the total players, count(distinct player_id) is used and divided to get the resultant output.
+    - Here the cte contains the player_id and the first login date of each player  with the help of min agg fn and group by clause of player_id
+    - Join query is for finding consecutive logins and used a case fn if it's true else 0, and sum() agg fn is used to sum up the case column
+    - Atlast to find the total players, count(distinct player_id) is used and divided to get the resultant output.
 
 - 13)   Write a SQL query to find the median salary of each company. Bonus points if you can solve it without using any built-in SQL functions.
 
@@ -106,8 +106,8 @@ URL: https://lifewithdata.com/2021/08/03/google-sql-interview-questions-leetcode
             FROM cte 
             WHERE rn IN ( (rc+1 ) DIV 2 , (rc+2) DIV 2 )
 
-   - row_number window fn is used based on salary (asc) (rn) and count(*) is used calculate total count of corresponding company. (rc)
-   - In where clause, if it's even count rc + 2 else if it's odd count rc + 1, and DIV is used for integer division.
+    - row_number window fn is used based on salary (asc) (rn) and count(*) is used calculate total count of corresponding company. (rc)
+    - In where clause, if it's even count rc + 2 else if it's odd count rc + 1, and DIV is used for integer division.
 
 - 14)  
 
