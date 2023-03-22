@@ -1,4 +1,4 @@
-#SNOWFLAKE Warehouse 
+# SNOWFLAKE Warehouse 
 
 - We have to create a warehouse, then choose the corresponding warehouse, then create databases and tables accordingly.
 
@@ -9,7 +9,7 @@
 
         - show databases;
 
-#Case:1 Tables can be created on Snowflake Web Ui platform:
+# Case:1 Tables can be created on Snowflake Web Ui platform:
 
 - In Hive Warehouse the size is not mandatory for datatypes, same goes for snowflake.
         
@@ -22,7 +22,7 @@
 
 - In Hive Warehouse the size is not mandatory for datatypes, same goes for snowflake.
 
-#Case:2 Tables are imported from Local to Snowflake WareHouse
+# Case:2 Tables are imported from Local to Snowflake WareHouse
 
          CREATE OR REPLACE TABLE sales(
          Region varchar(80),
