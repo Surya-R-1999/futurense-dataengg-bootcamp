@@ -1,6 +1,6 @@
 - 1) Write an SQL query to find all numbers that appear at least three times consecutively. Return the result table in any order.
       
-      #here lead function is used to retrieve the next succeeding records.
+      # Here lead function is used to retrieve the next succeeding records.
       select distinct num1 as ConsecutiveNums from
       (select id , num as num1, lead(num,1) over(order by id) as num2, lead(num,2) over(order by id) as num3 from logs) derived_table
       where num1 = num2 and num2 = num3 
