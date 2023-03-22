@@ -32,6 +32,9 @@
          Country varchar(80),Item_Type varchar(80),Sales_Channel varchar(80),Order_Priority varchar(80),Order_Date varchar(25),Order_ID varchar(80),Ship_Date varchar(25),Units_Sold int,Unit_Price int,Unit_Cost int,Total_Revenue int,Total_Cost int,Total_Profit int
          );
         
+- Files can be insrerted from local to Snowflake warehouse using cli, web UI doesn't support insertion. 
+- Initially move the local file to staging area and then move the file to staging area to warehouse.
+        
         put file://mnt/c/Users/miles/Desktop/Sales_Records.csv @MILES.PUBLIC.%sales;
         
         COPY INTO sales FROM '@~/staged/Sales_Records.csv.gz' FILE_FORMAT=(TYPE=CSV, COMPRESSION = GZIP, SKIP_HEADER=1, FIELD_DELIMITER=',');
