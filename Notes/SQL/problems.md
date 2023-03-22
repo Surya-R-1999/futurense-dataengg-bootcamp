@@ -88,7 +88,7 @@ URL: https://lifewithdata.com/2021/08/03/sql-interview-questions-leetcode-550-ga
 * Join query is for finding consecutive logins and used a case fn if it's true else 0, and sum() agg fn is used to sum up the case column
 * Atlast to find the total players, count(distinct player_id) is used and divided to get the resultant output.
 
--13)       
+- 13)   Select all employee’s name and bonus whose bonus is < 1000.    
 
 
 
