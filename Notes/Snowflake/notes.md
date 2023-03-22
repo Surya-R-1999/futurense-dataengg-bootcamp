@@ -1,3 +1,5 @@
+# SNOWFLAKE Warehouse 
+
 - We have to create a warehouse, then choose the corresponding warehouse, then create databases and tables accordingly.
 
         - create warehouse MYEBAYANALYTICS;
@@ -6,6 +8,8 @@
 - We use Warehouses as intermediate to integrate wth visyualization tools for reports if the data is stored in Local system.
 
         - show databases;
+
+# Case:1 Tables can be created on Snowflake Web Ui platform:
 
 - In Hive Warehouse the size is not mandatory for datatypes, same goes for snowflake.
         
@@ -17,6 +21,8 @@
 
 
 - In Hive Warehouse the size is not mandatory for datatypes, same goes for snowflake.
+
+# Case:2 Tables are imported from Local to Snowflake WareHouse
 
          CREATE OR REPLACE TABLE sales(
          Region varchar(80),
