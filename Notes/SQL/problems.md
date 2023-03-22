@@ -43,4 +43,48 @@
            select score, dense_rank() over(order by score desc) as 'rank'
            from Scores
            order by score desc
-- 8) 
+- 8) Write an SQL query to find all dates’ id with higher temperature compared to its previous dates (yesterday).
+
+            select w1.id
+            from Weather w1 
+            join Weather w2 
+            on datediff(w1.recorddate,w2.recordDate) = 1 
+            where w1.temperature > w2.temperature
+
+- 9) Write an SQL query that reports the first login date for each player.
+
+            select player_id, event_date as first_login from
+            (select player_id, event_date, row_number() over(partition by player_id order by event_date) as 'rnk' from Activity ) derived_table
+            where rnk = 1
+            
+- 10) Write a SQL query that reports the device that is first logged in for each player.
+
+           select player_id, device_id from (select player_id, device_id, row_number() over(partition by player_id order by event_date) as 'rnk' from Activity)                    derived_table where rnk = 1
+
+- 11) Write an SQL query that reports for each player and date, how many games played so far by the player. That is, the total number of games played by the player until that date. Check the example for clarity.
+            
+            -- aggregate functions are also used as window functions, and to sum based on particular key we use partition by and the order by is used to specify the               summation order
+            
+            select player_id, event_date, games_played_so_far
+            from (select player_id, event_date, games_played, 
+            sum(games_played) over(partition by player_id order by event_date) as 'games_played_so_far' from Activity) derived_table
+
+- 12) Write an SQL query that reports the fraction of players that logged in again on the day after the day they first logged in, rounded to 2 decimal places. In other words, you need to count the number of players that logged in for at least two consecutive days starting from their first login date, then divide that number by the total number of players.
+            
+URL: https://lifewithdata.com/2021/08/03/sql-interview-questions-leetcode-550-game-play-analysis-iv/
+
+            WITH cte AS (
+            SELECT player_id, MIN(event_date) as first_login
+            FROM Activity
+            GROUP BY player_id
+            )
+
+            SELECT ROUND(SUM(CASE WHEN DATEDIFF(event_date, first_login)=1 THEN 1 ELSE 0  END) / COUNT(DISTINCT cte.player_id), 2) as fraction
+            FROM Activity as a
+            JOIN cte 
+            ON a.player_id = cte.player_id
+
+            
+
+
+
