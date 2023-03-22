@@ -34,8 +34,8 @@
 - Files can be insrerted from local to Snowflake warehouse using cli, web UI doesn't support insertion. 
 - Initially move the local file to staging area and then move the file to staging area to warehouse.
         
-        put file://mnt/c/Users/miles/Desktop/Sales_Records.csv @MILES.PUBLIC.%sales;
+        put file://C:/Users/miles/Documents/futurense-dataengg-bootcamp/Sales_Records.csv @MILES.PUBLIC.%sales;
         
-        COPY INTO sales FROM '@~/staged/Sales_Records.csv.gz' FILE_FORMAT=(TYPE=CSV, COMPRESSION = GZIP, SKIP_HEADER=1, FIELD_DELIMITER=',');
-
+        COPY INTO sales FROM '@MILES.PUBLIC.%sales/Sales_Records.csv.gz' FILE_FORMAT=(TYPE=CSV, COMPRESSION = GZIP, SKIP_HEADER=1, FIELD_DELIMITER=',');
+        
         select * from sales;
