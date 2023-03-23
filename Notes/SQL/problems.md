@@ -109,7 +109,7 @@ URL: https://lifewithdata.com/2021/08/03/google-sql-interview-questions-leetcode
     - row_number window fn is used based on salary (asc) (rn) and count(*) is used calculate total count of corresponding company. (rc)
     - In where clause, if it's even count rc + 2 else if it's odd count rc + 1, and DIV is used for integer division.
 
-- 14)  The Employee table holds all employees including their managers. Every employee has an Id, and there is also a column for the manager Id.Given the Employee table, write a SQL query that finds out managers with at least 5 direct report. For the above table, your SQL query should return:
+- 14) The Employee table holds all employees including their managers. Every employee has an Id, and there is also a column for the manager Id.Given the Employee table, write a SQL query that finds out managers with at least 5 direct report. For the above table, your SQL query should return:
 
             with cte as(
             select id, managerId, 
@@ -119,4 +119,10 @@ URL: https://lifewithdata.com/2021/08/03/google-sql-interview-questions-leetcode
             
 ![14](https://user-images.githubusercontent.com/121089254/227147672-09805e8b-50ba-4708-9431-58bc02cac929.png)
 
+- 15) A university uses 2 data tables, student and department, to store data about its students and the departments associated with each major.
+Write a query to print the respective department name and number of students majoring in each department for all departments in the department table (even ones with no current students).
+Sort your results by descending number of students; if two or more departments have the same number of students, then sort those departments alphabetically by department name.
 
+            select dep_name, count(dep_id) as students_cnt from (select s.dept_id as dep_id, d.dept_name as dep_name from department d 
+            LEFT join Student s on d.dept_id = s.dept_id) derived_table
+            group by dep_name;
