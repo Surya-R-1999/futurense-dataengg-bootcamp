@@ -111,6 +111,12 @@ URL: https://lifewithdata.com/2021/08/03/google-sql-interview-questions-leetcode
 
 - 14)  The Employee table holds all employees including their managers. Every employee has an Id, and there is also a column for the manager Id.Given the Employee table, write a SQL query that finds out managers with at least 5 direct report. For the above table, your SQL query should return:
 
+            with cte as(
+            select id, managerId, 
+            name, row_number() over(partition by managerId order by managerId) as 'rn' 
+            from Employee)
+            select name from Employee where id in (select managerId from cte where rn >= 5);
             
+![14](https://user-images.githubusercontent.com/121089254/227147672-09805e8b-50ba-4708-9431-58bc02cac929.png)
 
 
