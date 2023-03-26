@@ -31,3 +31,23 @@
 
 - Hive default Storage is HDFS. Therefore importing Structured data from anywhere, outside the hadoop eco-system is done via SQOOP.
 
+- Using Sqoop import, we are importing the table from ClientDB to Hive warehouse for analysis, once the analysis is done, the results are stored in external table and sent to clinetDB once again.
+
+        sqoop import \
+        --connect jdbc:mysql://localhost/ott_platform \
+        --username root \
+        --password cloudera \
+        --table disney_hotstar \
+        --hive-import \
+        --hive-overwrite \
+        --create-hive-table \
+        --hive-table disney_hotstar \
+        --num-mappers 1
+
+- The table has been imported Successfully to Hive Warehouse.
+
+# Analysis:
+
+![image](https://user-images.githubusercontent.com/121089254/227793116-6fa6375e-a6ef-43ef-a9c1-59dfc451fd1b.png)
+
+
