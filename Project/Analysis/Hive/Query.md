@@ -55,7 +55,8 @@
 ![image](https://user-images.githubusercontent.com/121089254/227793116-6fa6375e-a6ef-43ef-a9c1-59dfc451fd1b.png)
 
         select d1.director, d1.yr, d1.votes from disney_hotstar d1 
-        join (SELECT d2.director as director, MAX(d2.votes) AS max_votes FROM disney_hotstar d2 GROUP BY d2.director order by max_votes desc limit 1) t2 
+        join (SELECT d2.director as director, MAX(d2.votes) AS max_votes FROM disney_hotstar d2 
+        GROUP BY d2.director order by max_votes desc limit 1) t2 
         on d1.director = t2.director 
         order by d1.votes desc 
         limit 1;
@@ -93,7 +94,8 @@
 
 ![image](https://user-images.githubusercontent.com/121089254/227825941-f02ff5bb-ab68-44c5-bc8c-e83c83027f55.png)
 
-        select count(title) as award_nominated_movie_cnt from disney_hotstar where yr between 1998 and 2018 and awards != 'N/A';
+        select count(title) as award_nominated_movie_cnt from disney_hotstar 
+        where yr between 1998 and 2018 and awards != 'N/A';
        
 ![Solution4](https://user-images.githubusercontent.com/121089254/227826964-b6bcf125-6b9f-46ee-8397-d829f81f9181.png)
 
