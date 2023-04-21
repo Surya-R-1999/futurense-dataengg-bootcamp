@@ -12,4 +12,25 @@
 
 ![3 1](https://user-images.githubusercontent.com/121089254/233549050-ef006545-82b1-43e8-a160-e18e28c6579d.png)
 
+- Correlated SubQuery:
+
+- This query uses a correlated subquery to count the number of students with a higher score than each student in the same class, and then selects only the top 3 students in each class based on this count. The result is sorted by class ID and score in descending order. Note that this query assumes that there are no ties in scores, as in the previous query.
+
+- Consider 
+![3 2](https://user-images.githubusercontent.com/121089254/233551668-43a840bd-dc76-4753-b98b-bab7ccffdcb0.png)
+
+- In this query, the outer query is executed after the inner query. The subquery in the WHERE clause is executed for each row in the outer query, and the result is used to filter the rows in the outer query. This is known as a correlated subquery, and it is executed for each row in the outer query.
+
+- Here is the order of execution of the query:
+
+- The subquery in the WHERE clause is executed for each row in the outer query. For each row, the subquery counts the number of students with a higher score than the current row in the same class.
+
+- The count result from the subquery is compared to 3, and if it is less than 3, the row is included in the final result set.
+
+- The rows that pass the filter in the WHERE clause are sorted by class_id and score in descending order.
+
+- The final result set is returned to the user.
+
+- So, in summary, the inner query is executed first, for each row in the outer query, and then the outer query is executed using the results of the inner query to filter the rows.
+
 - 4) 
