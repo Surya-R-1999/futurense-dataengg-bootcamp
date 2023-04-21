@@ -39,4 +39,7 @@
 
 - dob must be in the default date format and enclosed with quotes . ('2049/12/25')
 
-- 5) 
+- 5) Extract the middle name from FullName using Mysql : (We are using substring_index function takes 3 arguments , colname, delimiter and the count of elements)
+
+![5](https://user-images.githubusercontent.com/121089254/233556598-978d17fe-ab79-475e-a804-f0c8390b81aa.png)
+
