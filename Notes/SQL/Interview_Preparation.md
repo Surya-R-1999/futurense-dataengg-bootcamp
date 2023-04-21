@@ -61,3 +61,12 @@
 
 - 7) print duplicate rows in a table 
 
+- 8) print records other than duplicated rows
+
+![7,8](https://user-images.githubusercontent.com/121089254/233656003-f7cf9d32-e5f1-47d3-ae2b-e1510c704183.png)
+
+- 9) Skip
+
+- 10) Delete duplicate records from a file, --> (Is mostly same as deleting records from table(referred as file) refer q:2)
+
+- 11)
