@@ -69,4 +69,8 @@
 
 - 10) Delete duplicate records from a file, --> (Is mostly same as deleting records from table(referred as file) refer q:2)
 
-- 11)
+- 15) Query max of salary of each department with the emp_id and emp_name also.
+
+![15](https://user-images.githubusercontent.com/121089254/233670706-33b6fb43-2109-4048-9acd-ec3a2c05424a.png)
+
+- 16) 
