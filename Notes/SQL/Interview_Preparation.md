@@ -6,6 +6,13 @@
 
 ![2](https://user-images.githubusercontent.com/121089254/233547977-a0e62295-37c3-4d3c-b3eb-f90107e8e542.png)
 
+- Using inner join
+
+- Here I'm deleting from users1 table so < sign is used.
+
+![2 1](https://user-images.githubusercontent.com/121089254/233559051-6bb9dae7-1054-4a05-b721-4e8e88678c5b.png)
+
+
 - 3) class wise top3 ranks (Go With dense_rank or row_number, if duplicates needs to be taken into account use dense_rank else row_number)
 
 ![3](https://user-images.githubusercontent.com/121089254/233549027-31098c0f-83f6-464b-b48c-fe5d8c4309fe.png)
@@ -42,4 +49,15 @@
 - 5) Extract the middle name from FullName using Mysql : (We are using substring_index function takes 3 arguments , colname, delimiter and the count of elements)
 
 ![5](https://user-images.githubusercontent.com/121089254/233556598-978d17fe-ab79-475e-a804-f0c8390b81aa.png)
+
+- 6) highest score for each student  
+
+- Window function is used.
+![6](https://user-images.githubusercontent.com/121089254/233560449-f50097a4-d552-4fa5-b107-1699e5ebb1d1.png)
+
+- Without window Function:
+
+![6 2](https://user-images.githubusercontent.com/121089254/233560770-82edcdbd-755a-4b33-a2c1-cf0045dfb72c.png)
+
+- 7) print duplicate rows in a table 
 
