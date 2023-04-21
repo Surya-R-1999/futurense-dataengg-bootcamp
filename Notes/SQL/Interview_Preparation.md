@@ -33,4 +33,10 @@
 
 - So, in summary, the inner query is executed first, for each row in the outer query, and then the outer query is executed using the results of the inner query to filter the rows.
 
-- 4) 
+- 4) Find the age from dob
+
+![4](https://user-images.githubusercontent.com/121089254/233552930-8a5e5d47-cfb4-44ee-a354-210784e989f1.png)
+
+- dob must be in the default date format and enclosed with quotes . ('2049/12/25')
+
+- 5) 
