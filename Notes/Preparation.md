@@ -6,7 +6,7 @@ Big data refers to extremely large and complex data sets that traditional databa
 Big data is crucial for businesses as it enables **data-driven decision-making** by identifying trends, patterns, and correlations that provide valuable insights for strategic planning. It allows organizations to gain a competitive edge, improve customer engagement, and drive innovation through informed decision-making based on data analysis.
 
 # Challenges in Big Data:
-  - **Data Storage:** Managing the increasing volume of data is a significant challenge due to data doubling in size every two years.
+  - **Data Storage:** Managing the increasing volume of data and the differnt file formats.
   - **Data Quality:** Ensuring data accuracy and consistency is crucial but challenging with the vast amount of data collected.
   - **Scaling:** Adapting to the growing data volume and processing requirements poses scalability challenges.
   - **Security:** Protecting data from internal and external threats, especially personal and sensitive information, is a major concern.
@@ -25,3 +25,10 @@ Traditional Business Intelligence (BI) architectures face limitations in handlin
   - Scaling to meet the demands of growing data volumes.
   - Integrating diverse data sources effectively.
   - Ensuring data quality and consistency across different sources.
+
+# Solutions to Overcome Traditional BI Architecture Limitations:
+To address the limitations of traditional BI architecture when dealing with big data, organizations can:
+  - Adopt modern big data technologies like Hadoop, NoSQL databases, and **in-memory computing**.
+  - Enhance data security measures through **encryption, access management, and real-time monitoring.**
+  - **Invest in cybersecurity expertise to protect data from internal and external threats**.
+  - Utilize **data lakes for centralized storage** 
